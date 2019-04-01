@@ -18,10 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AlgorithmPrototype.h" />
+    <ClInclude Include="DualCycleImplement.h" />
+    <ClInclude Include="DualCycleLinkedList.h" />
+    <ClInclude Include="LinkedListImplement.h" />
+    <ClInclude Include="LinkList_Algorithm.h" />
+    <ClInclude Include="List_Algorithm.h" />
+    <ClInclude Include="MySort.h" />
+    <ClInclude Include="SequenceList.h" />
+    <ClInclude Include="SinglyLinkedList.h" />
+    <ClInclude Include="SLImplement.h" />
+    <ClInclude Include="SqListImplement.h" />
+    <ClInclude Include="StaticLinkedList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="TestLinkedList.c" />
+    <ClCompile Include="TestSequenceList.c" />
+    <ClCompile Include="TestSort.c" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{55EC86FF-1472-4C3F-8B5C-66E289FBE145}</ProjectGuid>
-    <RootNamespace>AlgorithmC</RootNamespace>
+    <ProjectGuid>{73D60CCE-3BE0-47F7-AEBA-A804A25F40A5}</ProjectGuid>
+    <RootNamespace>List</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -114,9 +133,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Algorithm.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
