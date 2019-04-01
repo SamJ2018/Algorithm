@@ -291,7 +291,7 @@ Status CreateList_TL(FILE *fp, LinkList *L, int n)
 }
 #endif
 
-/*不使用文件的插入*/
+/*不使用文件的插入*/ 
 Status CreateList_H(LinkList *L )
 {
 	*L = (LinkList)malloc(sizeof(LNode));
