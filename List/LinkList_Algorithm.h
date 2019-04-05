@@ -378,20 +378,88 @@ void Disassemble(LinkList *La, LinkList *Lb)
 设C={a1，b1, a2，b2，…，an, bn}为线性表，
 采用带头结点的hc单链表存放，设计一个就地算法，将其拆分为两个线性表，使得A={al，a2,…，an}, B={bn,…，b2, b1}
 */
+LinkList splitList(LinkList *C)
+{
+	LinkList B = (LinkList)malloc(sizeof(LNode));
+	B->next = NULL;  //B表初始化
+
+	LNode* p = (*C)->next, *q, *ra=(*C);  //p为工作指针
+
+	while (p)
+	{
+		ra->next = p;  //将*p链接到A的表尾结点
+		ra = p;
+
+		p = p->next;
+		q = p->next;   //头插法后，*p会断链，用q保存
+		p->next = B->next;  //头插法
+		B->next = p;
+		p = q;
+	}
+	ra->next = NULL;  //A为结点next域置空
+	return B;
+}
 
 
 /*
 在一个递增有序的线性表中，有数值相同的元素存在。若存储方式为单链表，设计算法去掉数值相同的元素，使表中不再有重复的元素。
 例如（7，10，10, 21，30, 42, 42, 42, 51，70)将变作（7，10，21，30, 42，51，70)。
 */
+void delete_same(LinkList *A)
+{
+	//L是递增序列的单链表，本算法删除表中数值相同元素的
+	LNode *p = (*A)->next,*q;
 
+	while (p)
+	{
+		q = p->next;
+		if (p->data == q->data)
+		{
+			p->next = q->next;
+			free(q);
+		}
+		p = p->next;
+	}
+}
 
 
 /*
 假设有两个按元素值递增次序排列的线性表，均以单链表形式存储。
 请编写算法将这两个单链表归并为一个接元素值递减次序排列的单链表，并要求利用原来两个单链表的结点存放归并后的单链表。
 */
+Status MergeDesc(LinkList *A, LinkList B)
+{
+	LNode* pa = (*A)->next, * pb = B->next, *r;  //pa和Pb是La,Lb的工作指针
+	(*A)->next = NULL;   //La作为结果链表的头指针，先将结果链表初始为空
+	while (pa && pb)	//两表不为空，循环
+	{
+		if (pa->data <= pb->next)   
+		{
+			r = pa->next;	//r暂存pa的后继
+			pa->next = (*A)->next; 
+			(*A)->next = pa;
+			pa = r;
+		}
+		else
+		{
+			r = pb->next;
+			pb->next = B->next;
+			B->next = pb;
+			pb = r;
+		}
+	}
+	if (pa) pb = pa;  //统一处理
 
+	while (pb)  //
+	{
+		r = pb->next;
+		pb->next = (*A)->next;
+		(*A)->next = pb;
+		pb = r;
+	}
+
+	free(pb);
+}
 
 /*
 设A和B是两个单链表（带头结点），其中元素递增有序。

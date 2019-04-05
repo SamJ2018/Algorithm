@@ -144,19 +144,99 @@ Status PriorElem_DuL(DuLinkList L, LElemType_DC cur_e, LElemType_DC *pre_e)
 }
 
 //(09)用next_e接收cur_e的后继。
-Status NextElem_DuL(DuLinkList L, LElemType_DC cur_e, LElemType_DC e);
+Status NextElem_DuL(DuLinkList L, LElemType_DC cur_e, LElemType_DC *next_e)
+{
+	DuLinkList p;
+
+	if (L)
+	{
+		p = L->next;
+		while (p != L && p->data != cur_e)
+			p = p->next;
+
+		if (p != L && p->next != L)
+		{
+			*next_e = p->next->data;
+			return OK;
+		}
+	}//if
+
+	return ERROR;
+}
 
 //(10)返回L中指向第i个结点的指针。
-DuLinkList GetElemPtr_DuL(DuLinkList L, int i);
+DuLinkList GetElemPtr_DuL(DuLinkList L, int i)
+{
+	int count;
+	DuLinkList p;
+
+	if (i > 0 && L)
+	{
+		count = 1;
+		p = L->next;
+		while(count <i && p!=L)
+		{
+			count++;
+			p = p->next;
+		}
+		if (p != L)
+			return p;
+	}
+	return (DuLinkList)NULL;
+}
 
 //(11)算法2.18：在L第i个位置之前插入e。
-Status	ListInsert_DuL(DuLinkList L, int i, LElemType_DC e);
+Status	ListInsert_DuL(DuLinkList L, int i, LElemType_DC e)
+{
+	DuLinkList p, s;
+
+	if (i<1 || i>ListLength_DuL(L) + 1) return ERROR;
+
+	//p为第i个结点的指针
+	p = GetElemPtr_DuL(L, i);
+	if (!p) p = L;  //若P=NULL，说明i=ListLength_DuL（L）+1, 令p指向头指针
+
+	s = (DuLinkList)malloc(sizeof(DuLinkList));
+	if (!s) exit(OVERFLOW);
+	s->data = e;
+
+	//插入操作
+	s->prior = p->prior;
+	p->prior->next = s;
+	s->next = p;
+	p->prior = s;
+
+	return OK;
+}
 
 //(12)算法2.19：删除L第i个位置的值，并用e接收。
-Status ListDelete_DuL(DuLinkList L, int i, LElemType_DC *e);
+Status ListDelete_DuL(DuLinkList L, int i, LElemType_DC* e)
+{
+	DuLinkList p;
+
+	if (!(p = GetElemPtr_DuL(L, i))) return ERROR;	
+
+	*e = p->data;
+
+	//删除
+	p->prior->next = p->next;
+	p->next->prior = p->prior;
+
+	free(p);
+	p = (DuLinkList)NULL;
+
+	return OK;
+}
 
 //(13)用Visit函数访问L。
-void ListTreaverse_DuL(DuLinkList L, void(Visit)(LElemType_DC));
+void ListTreaverse_DuL(DuLinkList L, Status(Visit)(LElemType_DC))
+{
+	DuLinkList p;
+
+	p = L->next;
+
+	while (p != L && Visit(p->data)) p = p->next;
+}
 
 
 #endif // !DUALCYCLEIMPLEMENT_H''

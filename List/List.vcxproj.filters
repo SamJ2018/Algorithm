@@ -34,6 +34,9 @@
     <Filter Include="Resource Files\ListSort">
       <UniqueIdentifier>{c791802b-33c8-41c3-a9e2-91e6e354be90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\NewFilter1">
+      <UniqueIdentifier>{36e2102f-4da5-4005-a22c-b24056ac7b8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SequenceList.h">
